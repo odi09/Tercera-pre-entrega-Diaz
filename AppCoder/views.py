@@ -8,18 +8,6 @@ from AppCoder.forms import Curso_formulario, Profesor_formulario, Alumno_formula
 def inicio(request):
     return render(request, "padre.html")
 
-def alta_curso(request, nombre):
-    curso = Curso(nombre=nombre, camada=234521)
-    curso.save()
-    texto = f"Se gurado en la base de datos: {curso.nombre} {curso.camada}"
-    return HttpResponse(texto)
-    
-def alta_profesor(request, nombre):
-    profesor = Profesor(nombre=nombre, apellido=apellido, materia=materia, email=email)
-    profesor.save()
-    texto = f"Se gurado en la base de datos: {profesor.nombre} {profesor.apellido} {profesor.materia} {profesor.email}"
-    return HttpResponse(texto)
-
 def ver_cursos(request):
     cursos = Curso.objects.all()
     dicc = {"cursos": cursos}
@@ -41,12 +29,6 @@ def ver_alumnos(request):
     documento = plantilla.render(dicc)
     return HttpResponse(documento)
 
-def alumnos(request):    
-    return render(request, "alumnos.html")
-
-def profesores(request):
-    return render(request, "profesores.html")
-
 def curso_formulario(request):
 
     if request.method == "POST":
@@ -55,9 +37,9 @@ def curso_formulario(request):
             datos = mi_formulario.cleaned_data #Limpia el formularo, es in dict
             curso = Curso(nombre=datos["nombre"], camada=datos["camada"])
             curso.save()
-            return render(request, "formulario.html")
+            return render(request, "formulario_curso.html")
 
-    return render(request, "formulario.html")
+    return render(request, "formulario_curso.html")
 
 def profesor_formulario(request):
 
@@ -96,12 +78,12 @@ def buscar_alumno(request):
 
     return render(request, "buscar_alumno.html")
 
-def buscar(request):
+def buscador_de_curso(request):
 
     if request.GET["nombre"]:
         nombre = request.GET["nombre"]
         cursos = Curso.objects.filter(nombre__icontains= nombre)
-        return render(request, "resultado_busqueda.html", {"cursos":cursos})
+        return render(request, "resultado_busqueda_curso.html", {"cursos":cursos})
 
     else:
         return HttpResponse("Ingrese el nombre del curso")
