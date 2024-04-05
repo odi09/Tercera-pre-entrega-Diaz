@@ -64,12 +64,12 @@ def alumno_formulario(request):
             return render(request, "formulario_alumno.html")
 
     return render(request, "formulario_alumno.html")
-######Busca un Curso #####
+###### Busca un Curso #####
 def buscar_curso(request):
 
     return render(request, "buscar_curso.html")
 
-######Busca un Profeesor #####  
+###### Busca un Profesor #####  
 def buscar_profesor(request):
 
     return render(request, "buscar_profesor.html")
@@ -102,7 +102,7 @@ def buscardor_de_alumnos(request):
 
     if request.GET["nombre"]:
         nombre = request.GET["nombre"]
-        alumno = Alumno.objects.filter(nombre__icontains= nombre)
+        alumnos = Alumno.objects.filter(nombre__icontains= nombre)
         return render(request, "resultado_busqueda_alumno.html", {"alumnos":alumnos})
 
     else:
