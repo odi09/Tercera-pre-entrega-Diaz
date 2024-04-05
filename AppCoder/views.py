@@ -9,25 +9,34 @@ def inicio(request):
     return render(request, "padre.html")
 
 def ver_cursos(request):
-    cursos = Curso.objects.all()
-    dicc = {"cursos": cursos}
-    plantilla = loader.get_template("cursos.html")
-    documento = plantilla.render(dicc)
-    return HttpResponse(documento)
+    return render(request, "curso_1.1.html")
 
 def ver_profesores(request):
-    profesores = Profesor.objects.all()
-    dicc = {"profesores": profesores}
-    plantilla = loader.get_template("profesores.html")
-    documento = plantilla.render(dicc)
-    return HttpResponse(documento)
+    return render(request, "profesor_1.1.html")
 
 def ver_alumnos(request):
-    alumnos = Alumno.objects.all()
-    dicc = {"alumnos": alumnos}
-    plantilla = loader.get_template("alumnos.html")
-    documento = plantilla.render(dicc)
-    return HttpResponse(documento)
+    return render(request, "alumno_1.1.html")
+
+#def ver_cursos(request):
+ #   cursos = Curso.objects.all()
+  #  dicc = {"cursos": cursos}
+  #  plantilla = loader.get_template("cursos.html")
+  #  documento = plantilla.render(dicc)
+  #  return HttpResponse(documento)
+
+#def ver_profesores(request):
+ #   profesores = Profesor.objects.all()
+  #  dicc = {"profesores": profesores}
+   # plantilla = loader.get_template("profesores.html")
+    #documento = plantilla.render(dicc)
+    #return HttpResponse(documento)
+
+#def ver_alumnos(request):
+ #   alumnos = Alumno.objects.all()
+  #  dicc = {"alumnos": alumnos}
+   # plantilla = loader.get_template("alumnos.html")
+    #documento = plantilla.render(dicc)
+    #return HttpResponse(documento)
 
 def curso_formulario(request):
 

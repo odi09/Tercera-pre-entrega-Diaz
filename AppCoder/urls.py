@@ -16,7 +16,7 @@ urlpatterns = [
     path("buscar_profesor", views.buscar_profesor ),
     path("buscar_alumno", views.buscar_alumno),
 
-    path("buscardo_de_cursos", views.buscador_de_curso),
+    path("buscardor_de_cursos", views.buscador_de_curso),
     path("buscardor_de_profesores", views.buscardor_de_profesores),
     path("buscardor_de_alumnos", views.buscardor_de_alumnos)
 ]
