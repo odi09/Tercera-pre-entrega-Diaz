@@ -1,0 +1,32 @@
+{% extends 'padre.html' %}
+
+{% load static%}
+
+{% block contenido %}
+    <main class="container">
+        <h1 class="text-center title">Cursos</h1>
+            {% if curso  %}
+               
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Camada</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{curso.nombre}}</td>
+                            <td>{{curso.camada}}</td>
+                            <td><a class="btn btn-primary btn-sm" href="{% url 'eliminar_curso' curso.id %}">Eliminar</a></td>
+                            <td><a class="btn btn-primary btn-sm" href="{% url 'modificar_curso' curso.id %}">Modificar</a></td>
+                        </tr>
+                    </tbody>
+                </table> 
+                        
+            {% endif %}        
+    </main>
+    
+{%  endblock %}
+
+

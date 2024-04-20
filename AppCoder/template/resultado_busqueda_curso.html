@@ -3,20 +3,36 @@
 {% load static %}
 
 {% block contenido %}
+<main class="container">
+    <h1 class="text-center title">Curso</h1>    
+        {% if cursos %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Camada</th>
+                    </tr>            
+                </thead>
+                <tbody>
+                    <ul>                           
+                        {% for curso in cursos %}         
+                            <td>{{curso.nombre}}</td>
+                            <td>{{curso.camada}}</td>                    
+                            <td><a class="btn btn-primary" href="{% url 'editar_curso' curso.id %}">Editar</a></td>
+                        {% endfor %}
+                    </ul>
+                </tbody>
+            </table>
+        {% else %}
+        
+            <h2>Buscar Curso</h2>
+            <form action="buscardor_de_cursos" method="GET">
+                <p>Ingrese el nombre del Curso</p>
+                <input type="text" name="nombre" id="nombre">
+                <button>Buscar</button>
+            </form>
+            <p style="color: red;">No se encontro un Curso con ese nombre</p>
 
-    {% if cursos %}
-        <ul>
-        {% for curso in cursos %}
-            <li>Nombre: {{curso.nombre}}</li>
-            <li>Camada: {{curso.camada}}</li>
-
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No se encontraron un Curso con ese nombre</p>
-    {% endif %}
-
+        {% endif %}           
+</main>   
 {% endblock%}
-
-
-

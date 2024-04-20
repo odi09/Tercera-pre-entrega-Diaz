@@ -4,6 +4,10 @@
 
 {% block contenido %}
 
+<main class="container">
+
+    <h1 class="text-center title">Profesores</h1> 
+
     {% if profesores %}
         <ul>
         {% for profesor in profesores %}
@@ -13,8 +17,17 @@
         {% endfor %}
         </ul>
     {% else %}
-        <p>No se encontraron un Profesor con ese nombre</p>
-    {% endif %}
+        <h2>Buscar Profesor</h2>
+            <form action="buscardor_de_profesores" method="GET">
+                <p>Ingrese el nombre del Profesor</p>
+                <input type="text" name="nombre" id="nombre">
+                <button>Buscar</button>
+            </form>
+        <p style="color: red;">No se encontro un Profesor con ese nombre</p>
+    {% endif %}   
+
+</main>
+    
 
 {% endblock%}
 

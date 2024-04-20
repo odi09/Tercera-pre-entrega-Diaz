@@ -3,18 +3,25 @@
 {% load static %}
 
 {% block contenido %}
-
+<main class="container">
+    <h1 class="text-center title">Alumnos</h1>   
     {% if alumnos %}
         <ul>
-        {% for alumno in alumnos %}
-            <li>Nombre: {{alumno.nombre}}</li>
-            <li>Apellido: {{alumno.apellido}}</li>
-            <li>Email: {{email.email}}</li>
-
-        {% endfor %}
+            {% for alumno in alumnos %}
+                <li>Nombre: {{alumno.nombre}}</li>
+                <li>Apellido: {{alumno.apellido}}</li>
+                <li>Email: {{email.email}}</li>
+            {% endfor %}
         </ul>
-    {% else %}
-        <p>No se encontraron Alumnos con ese nombre</p>
+        {% else %}
+        <h2>Buscar Alumno</h2>
+        <form action="buscardor_de_alumnos" method="GET">
+            <p>Ingrese el nombre del Alumno</p>
+            <input type="text" name="nombre" id="nombre">
+            <button>Buscar</button>
+        </form>
+        <p style="color: red;">No se encontro un Alumno con ese nombre</p>
     {% endif %}
+</main>  
 
 {% endblock%}

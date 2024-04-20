@@ -18,5 +18,15 @@ urlpatterns = [
 
     path("buscardor_de_cursos", views.buscador_de_curso),
     path("buscardor_de_profesores", views.buscardor_de_profesores),
-    path("buscardor_de_alumnos", views.buscardor_de_alumnos)
+    path("buscardor_de_alumnos", views.buscardor_de_alumnos),
+
+    path("editar_curso/<int:id>", views.editar_curso, name="editar_curso"),
+
+    path("eliminar_curso/<int:id>" , views.eliminar_curso , name="eliminar_curso"), 
+
+    path("modificar_curso/<int:id>" , views.modificar , name="modificar_curso"),
+
+    path("login", views.login_request , name="login"),
+
+    path("register" , views.register , name="register")
 ]

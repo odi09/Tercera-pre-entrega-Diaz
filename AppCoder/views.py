@@ -3,9 +3,12 @@ from AppCoder.models import Curso, Profesor, Alumno
 from django.http import HttpResponse
 from django.template import loader
 from AppCoder.forms import Curso_formulario, Profesor_formulario, Alumno_formulario
-# Create your views here.
+from django.contrib.auth.forms import AuthenticationForm , UserChangeForm, UserCreationForm
+from django.contrib.auth import login, authenticate
+# Create your views here. 
 
 def inicio(request):
+    
     return render(request, "padre.html")
 
 def ver_cursos(request):
@@ -17,12 +20,7 @@ def ver_profesores(request):
 def ver_alumnos(request):
     return render(request, "alumno_1.1.html")
 
-#def ver_cursos(request):
- #   cursos = Curso.objects.all()
-  #  dicc = {"cursos": cursos}
-  #  plantilla = loader.get_template("cursos.html")
-  #  documento = plantilla.render(dicc)
-  #  return HttpResponse(documento)
+
 
 #def ver_profesores(request):
  #   profesores = Profesor.objects.all()
@@ -87,7 +85,7 @@ def buscar_alumno(request):
 
     return render(request, "buscar_alumno.html")
 
-def buscador_de_curso(request):
+def buscador_de_curso(request): 
 
     if request.GET["nombre"]:
         nombre = request.GET["nombre"]
@@ -116,4 +114,78 @@ def buscardor_de_alumnos(request):
 
     else:
         return HttpResponse("Ingrese el nombre del Alumno")
+
+## Editar ##
+def editar_curso(request, id):
+    curso = Curso.objects.get(id=id)
+    dicc = {"curso": curso}
+    plantilla = loader.get_template("curso.html")
+    documento = plantilla.render(dicc)
+    return HttpResponse(documento)
+
+### Eliminar ###
+
+def eliminar_curso(request , id ):
+    curso = Curso.objects.get(id=id)
+    if request.method == "POST":
+        curso.delete()
+        curso = Curso.objects.all()
+        return render(request , "curso.html" , {"curso":curso})
+ 
+    return render(request , "curso_1.1.html" , {"curso":curso})
+
+
+### Modificar ###
+def modificar(request , id):
+    curso = Curso.objects.get(id=id)
+    if request.method == "POST":
+        mi_formulario = Curso_formulario(request.POST)
+        if mi_formulario.is_valid():
+            datos = mi_formulario.cleaned_data
+            curso.nombre = datos["nombre"]
+            curso.camada = datos["camada"]
+            curso.save()
+            return render(request , "curso.html" , {"curso":curso})
+    else:
+        mi_formulario = Curso_formulario(initial={"nombre":curso.nombre , "camada":curso.camada})
+
+    return render( request , "modificar_curso.html" , {"mi_formulario": mi_formulario , "curso":curso})
+
+###login##
+def login_request(request):
+
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data.get("username")
+            contra =  form.cleaned_data.get("password")
+            user = authenticate(username=usuario, password=contra)
+            if user is not None:
+                login(request , user)
+                return render(request , "inicio.html" , {"mensaje":f"Bienvenido {usuario}"})
+
+            else:
+                return HttpResponse(f"Usuario no encontrado")
+        else:
+            return HttpResponse(f"FORM INCORRECTO {form}")
+
+    form = AuthenticationForm()
+    return render(request, "login.html" , {"form":form})
+
+def register(request):
+    if request.method == "POST":
+        form =  UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponse("Usuario creado")
+    else:
+        form = UserCreationForm()
+    return render(request , "registro.html" , {"form":form})
+
+
+
+
+
+
+
         
