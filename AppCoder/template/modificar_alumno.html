@@ -1,16 +1,19 @@
 {% extends "padre.html" %}
 
 {% load static %}
- 
+
 {% block contenido %}
 <main class="container">
     <h1 class="text-center title">Modificar</h1>
-    <form action="{% url 'modificar_curso' curso.id %}" method="POST">
+    <form action="{% url 'modificar_alumno' alumno.id %}" method="POST">
         {% csrf_token %}
         <p>Nombre</p>
         {{mi_formulario.nombre}}
-        <p>Camada</p>
-        {{mi_formulario.camada}}<br><br>
+        <p>Apellido</p>
+        {{mi_formulario.apellido}}
+        <p>Email</p>
+        {{mi_formulario.email}}<br><br>
+
         <button class="btn btn-primary">Enviar</button>
     </form>
 </main>  

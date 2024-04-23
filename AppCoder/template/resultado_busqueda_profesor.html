@@ -3,19 +3,30 @@
 {% load static %}
 
 {% block contenido %}
-
 <main class="container">
-
     <h1 class="text-center title">Profesores</h1> 
-
     {% if profesores %}
-        <ul>
-        {% for profesor in profesores %}
-            <li>Nombre: {{profesor.nombre}}</li>
-            <li>Apellido: {{profesor.apellido}}</li>
-
-        {% endfor %}
-        </ul>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Materia</th>
+                    <th>Email</th>
+                </tr>            
+            </thead> 
+            <tbody>                
+                {% for profesor in profesores %}
+                    <tr>
+                        <td>{{profesor.nombre}}</td>
+                        <td>{{profesor.apellido}}</td>
+                        <td>{{profesor.materia}}</td>
+                        <td>{{profesor.email}}</td>
+                        <td><a class="btn btn-primary" href="{% url 'editar_profesor' profesor.id %}">Editar</a></td>
+                    </tr>                                                                                    
+                {% endfor %}                                    
+            </tbody>                
+        </table>        
     {% else %}
         <h2>Buscar Profesor</h2>
             <form action="buscardor_de_profesores" method="GET">
@@ -24,11 +35,8 @@
                 <button>Buscar</button>
             </form>
         <p style="color: red;">No se encontro un Profesor con ese nombre</p>
-    {% endif %}   
-
+    {% endif %}
 </main>
-    
-
 {% endblock%}
 
 

@@ -5,24 +5,25 @@
 {% block contenido %}
     <main class="container">
         <h1 class="text-center title">Alumnos</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>nombre</th>
-                    <th>apellido</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for n in alumnos %}
-                <tr>
-                    <td>{{n.id}}</td>
-                    <td>{{n.nombre}}</td>
-                    <td>{{n.apellido}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </main>
-    
+            {% if alumno  %}               
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Email</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{alumno.nombre}}</td>
+                            <td>{{alumno.apellido}}</td>
+                            <td>{{alumno.email}}</td>
+                            <td><a class="btn btn-primary btn-sm" href="">Eliminar</a></td>
+                            <td><a class="btn btn-primary btn-sm" href="{% url 'modificar_alumno' alumno.id %}">Modificar</a></td>
+                        </tr>
+                    </tbody>
+                </table>                         
+            {% endif %}        
+    </main>     
 {%  endblock %}

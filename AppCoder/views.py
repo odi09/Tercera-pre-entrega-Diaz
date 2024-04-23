@@ -11,30 +11,14 @@ def inicio(request):
     
     return render(request, "padre.html")
 
-def ver_cursos(request):
-    return render(request, "curso_1.1.html")
+def cursos(request):
+    return render(request, "buscar_curso.html")
+
+def alumnos(request):
+    return render(request, "alumno.html")
 
 def ver_profesores(request):
-    return render(request, "profesor_1.1.html")
-
-def ver_alumnos(request):
-    return render(request, "alumno_1.1.html")
-
-
-
-#def ver_profesores(request):
- #   profesores = Profesor.objects.all()
-  #  dicc = {"profesores": profesores}
-   # plantilla = loader.get_template("profesores.html")
-    #documento = plantilla.render(dicc)
-    #return HttpResponse(documento)
-
-#def ver_alumnos(request):
- #   alumnos = Alumno.objects.all()
-  #  dicc = {"alumnos": alumnos}
-   # plantilla = loader.get_template("alumnos.html")
-    #documento = plantilla.render(dicc)
-    #return HttpResponse(documento)
+    return render(request, "buscar_profesor.html")
 
 def curso_formulario(request):
 
@@ -72,9 +56,6 @@ def alumno_formulario(request):
 
     return render(request, "formulario_alumno.html")
 ###### Busca un Curso #####
-def buscar_curso(request):
-
-    return render(request, "buscar_curso.html")
 
 ###### Busca un Profesor #####  
 def buscar_profesor(request):
@@ -91,7 +72,6 @@ def buscador_de_curso(request):
         nombre = request.GET["nombre"]
         cursos = Curso.objects.filter(nombre__icontains= nombre)
         return render(request, "resultado_busqueda_curso.html", {"cursos":cursos})
-
     else:
         return HttpResponse("Ingrese el nombre del curso")
 
@@ -123,20 +103,22 @@ def editar_curso(request, id):
     documento = plantilla.render(dicc)
     return HttpResponse(documento)
 
-### Eliminar ###
+def editar_alumno(request, id):
+    alumno = Alumno.objects.get(id=id)
+    dicc = {"alumno": alumno}
+    plantilla = loader.get_template("alumnos.html")
+    documento = plantilla.render(dicc)
+    return HttpResponse(documento)
 
-def eliminar_curso(request , id ):
-    curso = Curso.objects.get(id=id)
-    if request.method == "POST":
-        curso.delete()
-        curso = Curso.objects.all()
-        return render(request , "curso.html" , {"curso":curso})
- 
-    return render(request , "curso_1.1.html" , {"curso":curso})
-
+def editar_profesor(request, id):
+    profesor = Profesor.objects.get(id=id)
+    dicc = {"profesor": profesor}
+    plantilla = loader.get_template("profesores.html")
+    documento = plantilla.render(dicc)
+    return HttpResponse(documento) 
 
 ### Modificar ###
-def modificar(request , id):
+def modificar_curso(request , id):
     curso = Curso.objects.get(id=id)
     if request.method == "POST":
         mi_formulario = Curso_formulario(request.POST)
@@ -151,6 +133,49 @@ def modificar(request , id):
 
     return render( request , "modificar_curso.html" , {"mi_formulario": mi_formulario , "curso":curso})
 
+def modificar_alumno(request , id):
+    alumno = Alumno.objects.get(id=id)
+
+    if request.method == "POST":
+        mi_formulario = Alumno_formulario(request.POST)
+        if mi_formulario.is_valid():
+            datos = mi_formulario.cleaned_data
+            alumno.nombre = datos["nombre"]
+            alumno.apellido = datos["apellido"]
+            alumno.email = datos["email"]
+            alumno.save()
+            return render(request , "alumnos.html  " , {"alumno":alumno})
+    else:
+        mi_formulario = Alumno_formulario(initial={"nombre":alumno.nombre , "apellido":alumno.apellido , "email":alumno.email})
+
+    return render( request , "modificar_alumno.html" , {"mi_formulario": mi_formulario , "alumno":alumno})
+
+def modificar_profesor(request , id):
+    profesor = Profesor.objects.get(id=id)
+
+    if request.method == "POST":
+        mi_formulario = Profesor_formulario(request.POST)
+        if mi_formulario.is_valid():
+            datos = mi_formulario.cleaned_data
+            profesor.nombre = datos["nombre"]
+            profesor.apellido = datos["apellido"]
+            profesor.materia = datos["materia"]
+            profesor.email = datos["email"]
+            profesor.save()
+            return render(request , "profesores.html" , {"profesor":profesor})
+    else:
+        mi_formulario = Profesor_formulario(initial={"nombre":profesor.nombre , "apellido":profesor.apellido , "materia":profesor.materia , "email":profesor.email})
+
+    return render(request , "modificar_profesor.html" , {"mi_formulario": mi_formulario , "profesor":profesor})
+
+### Eliminar ###
+
+def eliminar_curso(request , id ):
+    curso = Curso.objects.get(id=id)
+    curso.delete()
+    curso = Curso.objects.all()
+    return render(request , "buscar_curso.html" , {"cursos":curso})
+    
 ###login##
 def login_request(request):
 

@@ -1,18 +1,28 @@
-{% extends "padre.html" %}
+{% extends 'padre.html' %}
 
-{% load static %}
-
+{% load static%}
+ 
 {% block contenido %}
-
-    <h2>Buscar Curso</h2>
-    <form action="buscardo_de_cursos" method="GET">
-        <p>Nombre</p>
-        <input type="text" name="nombre" id="nombre">
-        <button>Buscar</button>
-    </form>
-
-{% endblock %}
-
-
-
-
+<main class="container">
+    <h1 class="text-center title">Cursos</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <h2>Buscar Curso</h2>
+            </tr>
+        </thead>
+        <tbody> 
+            <tr>
+                <td>
+                    <form action="buscardor_de_cursos" method="GET">
+                        <p>Ingrese el nombre del Curso</p>
+                        <input type="text" name="nombre" id="nombre">
+                        <button>Buscar</button>
+                    </form>
+                </td>                
+            </tr>           
+             
+        </tbody>
+    </table>
+</main>
+{% endblock %} 

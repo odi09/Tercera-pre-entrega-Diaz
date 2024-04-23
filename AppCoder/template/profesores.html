@@ -1,32 +1,31 @@
 {% extends 'padre.html' %}
 
 {% load static%}
-
+ 
 {% block contenido %}
     <main class="container">
         <h1 class="text-center title">Profesores</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>nombre</th>
-                    <th>apellido</th>
-                    <th>materia</th>
-                    <th>email</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for n in profesores %}
-                <tr>
-                    <td>{{n.id}}</td>
-                    <td>{{n.nombre}}</td>
-                    <td>{{n.apellido}}</td>
-                    <td>{{n.materia}}</td>
-                    <td>{{n.email}}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </main>
-    
+        {% if profesor  %} 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Materia</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>                   
+                    <tr>
+                        <td>{{profesor.nombre}}</td>
+                        <td>{{profesor.apellido}}</td>
+                        <td>{{profesor.materia}}</td>
+                        <td>{{profesor.email}}</td>
+                        <td><a class="btn btn-primary btn-sm" href="">Eliminar</a></td>
+                        <td><a class="btn btn-primary btn-sm" href="{% url 'modificar_profesor' profesor.id %}">Modificar</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        {% endif %}         
+    </main>    
 {%  endblock %}
